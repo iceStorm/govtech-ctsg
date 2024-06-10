@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "surveysg-be",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/backend/src",
+  "sourceRoot": "packages/surveysg-be/src",
   "projectType": "application",
   "tags": ["app"],
   "targets": {
@@ -9,14 +9,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "backend:build"
+        "buildTarget": "surveysg-be:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "backend:build:development"
+          "buildTarget": "surveysg-be:build:development"
         },
         "production": {
-          "buildTarget": "backend:build:production"
+          "buildTarget": "surveysg-be:build:production"
         }
       }
     }
