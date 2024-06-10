@@ -1,0 +1,9 @@
+{
+  "name": "govaa-fe",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/govaa-fe/src",
+  "projectType": "application",
+  "tags": ["app"],
+  "// targets": "to see all targets run: nx show project govaa-fe --web",
+  "targets": {}
+}
