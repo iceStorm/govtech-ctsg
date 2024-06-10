@@ -1,0 +1,24 @@
+{
+  "name": "govaa-be",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/govaa-be/src",
+  "projectType": "application",
+  "tags": ["app"],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "govaa-be:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "govaa-be:build:development"
+        },
+        "production": {
+          "buildTarget": "govaa-be:build:production"
+        }
+      }
+    }
+  }
+}
