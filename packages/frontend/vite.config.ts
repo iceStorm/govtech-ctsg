@@ -9,12 +9,12 @@ export default defineConfig({
 
   server: {
     port: 7502,
-    host: 'localhost',
+    host: true,
   },
 
   preview: {
     port: 7520,
-    host: 'localhost',
+    host: true,
   },
 
   plugins: [react(), nxViteTsPaths()],

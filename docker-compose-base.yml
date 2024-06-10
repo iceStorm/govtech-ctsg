@@ -1,0 +1,22 @@
+# https://docs.docker.com/compose/file-watch/
+# https://www.codefeetime.com/post/using-docker-compose-with-nx-monorepo-for-multi-apps-development/
+
+services:
+  nx-app-base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    environment:
+      - DEV_PLATFORM=DOCKER
+
+    develop:
+      watch:
+        - action: rebuild
+          path: package.json
+
+        - action: sync
+          path: ./packages
+          target: /app/packages
+          ignore:
+            - node_modules/

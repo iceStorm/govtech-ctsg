@@ -1,0 +1,59 @@
+networks:
+  gov_ctsg:
+    driver: bridge
+
+services:
+  # database:
+  #   container_name: gov_ctsg_db
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_USER: ${DB_USERNAME}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #   volumes:
+  #     - .docker/postgre:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - gov_ctsg
+
+  # pgadmin:
+  #   container_name: gov_ctsg_db_explorer
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${DB_EMAIL}
+  #     PGADMIN_DEFAULT_PASSWORD: ${DB_PASSWORD}
+  #     PGADMIN_CONFIG_SERVER_MODE: 'False'
+  #   volumes:
+  #     - .docker/pgadmin:/var/lib/pgadmin
+  #   ports:
+  #     - "5433:80"
+  #   networks:
+  #     - gov_ctsg
+  #   depends_on:
+  #     - database
+
+  backend:
+    container_name: gov_ctsg_backend
+    extends:
+      file: docker-compose-base.yml
+      service: nx-app-base
+    command: yarn nx run backend:serve
+    ports:
+      - "7501:7501"
+      - "9229:9229"
+    networks:
+      - gov_ctsg
+    # depends_on:
+    #   - database
+    # frontend:
+    #   container_name: gov_ctsg_frontend
+    #   extends:
+    #     file: docker-compose-base.yml
+    #     service: nx-app-base
+    #   command: yarn nx run frontend:serve
+    #   ports:
+    #     - "7502:7502"
+    #   networks:
+    #     - gov_ctsg
+    #   depends_on:
+    #     - backend
