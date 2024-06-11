@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "be-common": {
+      "type": "library",
+      "root": "packages/be-common",
+      "entryFile": "index",
+      "sourceRoot": "packages/be-common/src",
+      "compilerOptions": {
+        "tsConfigPath": "packages/be-common/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

@@ -15,7 +15,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "@/common/*": ["../common/src/*"]
+      "@/common/*": ["../common/src/*"],
+      "@/be-common/*": ["../be-common/src/*"]
     }
   }
 }
