@@ -1,8 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { GovaaUser, GovaaLoginPayload } from '~/dtos/govaa.dto';
+
+const mockUsers: GovaaUser[] = [
+  {
+    name: 'Anh Tuan',
+    email: 'tuanna@ncs-sdc.com',
+    password: '12345',
+  },
+];
 
 @Injectable()
 export class AppService {
-  getData(): { message: string } {
-    return { message: 'Hello API' };
+  async authenticate(credentials: GovaaLoginPayload) {
+    const { email, password } = credentials;
+
+    const foundUser = mockUsers.find((user) => user.email === email && user.password === password);
+
+    if (!foundUser) {
+      throw new ForbiddenException('User not found');
+    }
+
+    return { name: foundUser.name };
   }
 }
