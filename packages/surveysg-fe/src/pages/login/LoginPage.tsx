@@ -4,6 +4,7 @@ import FormItem from 'antd/es/form/FormItem';
 import { clsx } from 'clsx';
 
 import type LoginPayload from '@/common/dtos/login-payload.dto';
+import { GovaaLoginAction } from '@/common/models/GovaaLoginActionQuery';
 
 import apiClient from '~/api';
 
@@ -19,7 +20,7 @@ export default function LoginPage() {
       console.log('form:', form.getFieldsValue());
 
       login(
-        { body: formValue },
+        { body: formValue, query: { action: GovaaLoginAction.SURVEY_LOGIN } },
         {
           onSuccess(data) {
             //

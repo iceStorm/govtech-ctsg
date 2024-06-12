@@ -7,7 +7,7 @@ import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 import GovernmentAgencyEntity from '~/entities/GovernmentAgency';
 import AuthModule from '~/modules/auth';
 import GovernmentAgencyModule from '~/modules/government-agency';
-import UserModule from '~/modules/user/user.module';
+import UserModule from '~/modules/user';
 
 import AppController from './app.controller';
 import AppService from './app.service';

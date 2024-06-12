@@ -41,6 +41,7 @@ module.exports = {
 
     'class-methods-use-this': 'warn',
     'no-restricted-exports': ['error', { restrictDefaultExports: { defaultFrom: false } }],
+    radix: 'warn',
 
     'react/react-in-jsx-scope': 'off',
   },

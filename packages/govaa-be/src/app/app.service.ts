@@ -18,7 +18,7 @@ export default class AppService {
     const foundUser = mockUsers.find((user) => user.email === email && user.password === password);
 
     if (!foundUser) {
-      throw new ForbiddenException('User not found');
+      throw new ForbiddenException('Email or password is incorrect');
     }
 
     return { name: foundUser.name };

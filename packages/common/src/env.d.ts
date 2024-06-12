@@ -8,6 +8,8 @@ declare namespace NodeJS {
     DB_EMAIL: string;
 
     JWT_SECRET: string;
+    JWT_ACCESS_EXPIRATION: string;
+    JWT_REFRESH_EXPIRATION: string;
 
     GOVAA_URL: string;
   }
