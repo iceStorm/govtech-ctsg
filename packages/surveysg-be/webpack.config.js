@@ -1,12 +1,12 @@
-const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
-
 const path = require('node:path');
+
+const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 
 /**
  * https://github.com/nrwl/nx/issues/14708
 In the v17 version of the fix a context-variable with the root path was available.
 It may be possible to get that value some other way, but for now this works
-**/
+* */
 const workspaceRoot = path.join(__dirname, '../..');
 
 /**

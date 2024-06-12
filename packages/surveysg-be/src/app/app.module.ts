@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import DatabaseModule from '@/be-common/modules/database/database.module';
 import { ConfigModule } from '@nestjs/config';
+
+import DatabaseModule from '@/be-common/modules/database';
+
 import GovernmentAgencyModule from '~/modules/government-agency';
 import AuthModule from '~/modules/auth';
 import GovernmentAgency from '~/entities/GovernmentAgency';
+
+import AppService from './app.service';
+import AppController from './app.controller';
 
 @Module({
   imports: [
@@ -18,4 +20,4 @@ import GovernmentAgency from '~/entities/GovernmentAgency';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export default class AppModule {}
