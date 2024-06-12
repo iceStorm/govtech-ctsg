@@ -1,7 +1,7 @@
-import { BaseEntity, Entity, PrimaryColumn } from 'typeorm';
+import { Entity, PrimaryColumn } from 'typeorm';
 
-@Entity()
-export default class GovernmentAgency extends BaseEntity {
+@Entity('government_agency')
+export default class GovernmentAgencyEntity {
   @PrimaryColumn()
   name: string;
 }
