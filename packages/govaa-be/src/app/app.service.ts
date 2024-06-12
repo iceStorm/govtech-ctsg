@@ -1,4 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+
 import { GovaaUser, GovaaLoginPayload } from '~/dtos/govaa.dto';
 
 const mockUsers: GovaaUser[] = [
@@ -10,7 +11,7 @@ const mockUsers: GovaaUser[] = [
 ];
 
 @Injectable()
-export class AppService {
+export default class AppService {
   async authenticate(credentials: GovaaLoginPayload) {
     const { email, password } = credentials;
 

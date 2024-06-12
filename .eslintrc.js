@@ -37,6 +37,8 @@ module.exports = {
 
     'class-methods-use-this': 'warn',
     'no-restricted-exports': ['error', { restrictDefaultExports: { defaultFrom: false } }],
+
+    'react/react-in-jsx-scope': 'off',
   },
   overrides: [
     {
@@ -57,22 +59,22 @@ module.exports = {
         ],
       },
     },
-    {
-      files: ['*.ts', '*.tsx'],
-      extends: ['plugin:@nx/typescript'],
-      rules: {},
-    },
+    // {
+    //   files: ['*.ts', '*.tsx'],
+    //   extends: ['plugin:@nx/typescript'],
+    //   rules: {},
+    // },
     {
       files: ['*.js', '*.jsx'],
       extends: ['plugin:@nx/javascript'],
       rules: {},
     },
-    {
-      files: ['*.spec.ts', '*.spec.tsx', '*.spec.js', '*.spec.jsx'],
-      env: {
-        jest: true,
-      },
-      rules: {},
-    },
+    // {
+    //   files: ['*.spec.ts', '*.spec.tsx', '*.spec.js', '*.spec.jsx'],
+    //   env: {
+    //     jest: true,
+    //   },
+    //   rules: {},
+    // },
   ],
 };

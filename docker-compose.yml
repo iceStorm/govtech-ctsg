@@ -32,29 +32,44 @@ services:
       - govtech_ctsg
     depends_on:
       - database
-  # backend:
-  #   container_name: govtech_ctsg_backend
-  #   extends:
-  #     file: docker-compose-base.yml
-  #     service: nx-app-base
-  #   command: yarn nx run backend:serve
-  #   ports:
-  #     - "7501:7501"
-  #     - "9229:9229"
-  #   networks:
-  #     - govtech_ctsg
-  #   depends_on:
-  #     - database
 
-  # frontend:
-  #   container_name: govtech_ctsg_frontend
-  #   extends:
-  #     file: docker-compose-base.yml
-  #     service: nx-app-base
-  #   command: yarn nx run frontend:serve
-  #   ports:
-  #     - "7502:7502"
-  #   networks:
-  #     - govtech_ctsg
-  #   depends_on:
-  #     - backend
+  govaa_backend:
+    container_name: govaa_backend
+    extends:
+      file: docker-compose-base.yml
+      service: nx-app-base
+    command: yarn nx run govaa-be:serve
+    ports:
+      - "7500:7500"
+      - "9229:9229"
+    networks:
+      - govtech_ctsg
+    depends_on:
+      - database
+
+  backend:
+    container_name: govtech_ctsg_backend
+    extends:
+      file: docker-compose-base.yml
+      service: nx-app-base
+    command: yarn nx run surveysg-be:serve
+    ports:
+      - "7501:7501"
+      - "9229:9229"
+    networks:
+      - govtech_ctsg
+    depends_on:
+      - govaa_backend
+
+  frontend:
+    container_name: govtech_ctsg_frontend
+    extends:
+      file: docker-compose-base.yml
+      service: nx-app-base
+    command: yarn nx run surveysg-fe:serve
+    ports:
+      - "7502:7502"
+    networks:
+      - govtech_ctsg
+    depends_on:
+      - backend

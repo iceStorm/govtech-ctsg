@@ -4,10 +4,10 @@ const hashPassword = (rawPassword: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     pbkdf2(rawPassword, 'lmSCvVDzBIhKNwXm', 1000, 128, 'sha512', (err, derivedKey) => {
       if (err) {
-        return reject(err);
+        reject(err);
+      } else {
+        resolve(derivedKey.toString('hex'));
       }
-
-      resolve(derivedKey.toString('hex'));
     });
   });
 };

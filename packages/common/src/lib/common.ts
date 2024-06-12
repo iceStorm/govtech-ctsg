@@ -1,3 +1,3 @@
-export function common(): string {
+export default function common(): string {
   return 'common';
 }

@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
-import { AppService } from './app.service';
 import { GovaaLoginPayload, GovaaLoginResponse } from '~/dtos/govaa.dto';
 
+import AppService from './app.service';
+
 @Controller()
-export class AppController {
+export default class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
