@@ -1,12 +1,22 @@
 import { Button } from 'antd';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useQueryParam, StringParam } from 'use-query-params';
 
+import AppRoutes from './constants/AppRoutes';
 import useAuthentication from './hooks/useAuthentication';
 
 export default function MainLayout() {
   const { pathname } = useLocation();
+  const [originated] = useQueryParam('originated', StringParam);
 
-  const { isLoggedIn, logOut } = useAuthentication();
+  const { isLoggedIn, currentUser, logOut } = useAuthentication();
+
+  const shouldShowCreateAccount =
+    pathname !== AppRoutes.CreateAccount &&
+    originated !== AppRoutes.CreateAccount &&
+    (!isLoggedIn || !currentUser.isRegistered);
+
+  console.log('should show:', shouldShowCreateAccount);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -25,7 +35,7 @@ export default function MainLayout() {
               </Link>
             )}
 
-            {!isLoggedIn && pathname !== '/sign-up' && (
+            {shouldShowCreateAccount && (
               <Link to="/sign-up">
                 <Button>Create account</Button>
               </Link>

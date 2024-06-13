@@ -2,7 +2,7 @@ import { createParamDecorator } from '@nestjs/common';
 
 const TokenInfo = createParamDecorator((data, ctx) => {
   const request = ctx.switchToHttp().getRequest();
-  return request.user;
+  return request.tokenInfo;
 });
 
 export default TokenInfo;

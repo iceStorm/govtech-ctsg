@@ -29,7 +29,7 @@ const apiRouter = c.router(
       path: '/users/profile',
       method: 'GET',
       responses: {
-        200: c.type<object>(),
+        200: c.type<SurveyUserEntity>(),
       },
     },
 

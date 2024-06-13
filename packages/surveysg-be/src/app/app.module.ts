@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import DatabaseModule from '@/be-common/modules/database';
+import GovernmentAgencyEntity from '@/common/entities/GovernmentAgencyEntity';
 import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 
-import GovernmentAgencyEntity from '~/entities/GovernmentAgency';
 import AuthModule from '~/modules/auth';
 import GovernmentAgencyModule from '~/modules/government-agency';
 import UserModule from '~/modules/user';

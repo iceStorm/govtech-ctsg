@@ -19,7 +19,13 @@ export default class AuthService {
       throw new ForbiddenException(govaaLoginResponse.body);
     }
 
-    return generateTokens({ email: credentials.email, name: govaaLoginResponse.body.name });
+    const surveyUser = await this.userRepo.findByEmail(credentials.email);
+
+    return generateTokens({
+      email: credentials.email,
+      name: govaaLoginResponse.body.name,
+      isRegistered: !!surveyUser,
+    });
   }
 
   async signUp(payload: SurveyUserEntity) {

@@ -4,8 +4,10 @@ import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useMemo } from 'react';
 
 import type SurveyUserEntity from '@/common/entities/SurveyUserEntity';
+import IServerError from '@/common/models/IServerError';
 
 import apiClient from '~/api';
+import AppStatic from '~/components/AppStatic';
 import useAuthentication from '~/hooks/useAuthentication';
 
 const SignUpFormItem = Form.Item<SurveyUserEntity>;
@@ -15,6 +17,9 @@ export default function SignUpPage() {
 
   const { data: governmentAgenciesResponse, isFetching: isFetchingAgencies } =
     apiClient.getGovernmentAgencies.useQuery(['government-agencies']);
+
+  const { isPending: isCreatingAccount, mutate: createAccount } =
+    apiClient.createAccount.useMutation();
 
   const governmentAgencies = useMemo(
     () => (governmentAgenciesResponse?.body ?? []).map((item) => item.name),
@@ -27,11 +32,28 @@ export default function SignUpPage() {
     form.setFieldsValue({ name: currentUser.name, email: currentUser.email });
   }, [currentUser.email, currentUser.name, form]);
 
+  const handleFormSubmit = async () => {
+    try {
+      const formValues = await form.validateFields();
+
+      createAccount(
+        { body: formValues },
+        {
+          onError(error) {
+            AppStatic.notification.error({ message: (error.body as IServerError).message });
+          },
+        },
+      );
+    } catch (error) {
+      console.log('form errors:', error);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-10 w-72 mx-auto">
       <h1 className="font-bold text-lg">Create SurveySG account.</h1>
 
-      <Form form={form} layout="vertical" disabled={isFetchingAgencies}>
+      <Form form={form} layout="vertical" disabled={isFetchingAgencies ?? isCreatingAccount}>
         <SignUpFormItem name="name" label="Name" rules={[{ required: true }]}>
           <Input disabled />
         </SignUpFormItem>
@@ -60,13 +82,20 @@ export default function SignUpPage() {
 
         <SignUpFormItem
           name="checkedTermsOfUse"
+          valuePropName="checked"
           rules={[{ required: true, message: 'Please confirm this checkbox' }]}
         >
           <Checkbox>I agree to terms of use</Checkbox>
         </SignUpFormItem>
 
         <SignUpFormItem>
-          <Button type="primary" htmlType="submit" className="w-full mt-5">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="w-full mt-5"
+            loading={isCreatingAccount}
+            onClick={handleFormSubmit}
+          >
             Create Account
           </Button>
         </SignUpFormItem>

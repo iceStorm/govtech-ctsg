@@ -33,7 +33,7 @@ export default function LoginPage() {
         {
           onSuccess(data) {
             setLoginSession(data.body.accessToken, data.body.refreshToken);
-            navigate(originated ?? AppRoutes.Home);
+            navigate(originated ?? AppRoutes.Profile);
           },
           onError(error) {
             console.log('error:', error);
