@@ -1,9 +1,12 @@
 import { IsEmail, IsString } from 'class-validator';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
+import IsTrue from '../validators/IsTrue';
+
 @Entity('user')
 export default class SurveyUserEntity {
   @PrimaryColumn()
+  @IsEmail()
   govaaEmail!: string; // govaa email
 
   @Column()
@@ -22,5 +25,8 @@ export default class SurveyUserEntity {
   @IsString()
   jobScopeDescription!: string;
 
+  // don't save this field in the database
+  // but still need to validate as request payload for account creation
+  @IsTrue()
   checkedTermsOfUse!: boolean;
 }

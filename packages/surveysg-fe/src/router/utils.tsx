@@ -1,7 +1,7 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 
-import { IAppRoute } from './IAppRoute';
-import RouteWrapperComponent from './RouteWrapperComponent';
+import RouteWrapperComponent from '~/components/RouteWrapper';
+import { IAppRoute } from '~/models/IAppRoute';
 
 const mapRouteConfigs = (customRouteObjects: IAppRoute[]): RouteObject[] => {
   return customRouteObjects.map((routeObject) => {

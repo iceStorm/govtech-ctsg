@@ -1,14 +1,15 @@
-import { PropsWithChildren, createContext, useMemo, useState } from 'react';
+import { PropsWithChildren, createContext, useMemo } from 'react';
 
 import ITokenInfo from '@/common/models/ITokenInfo';
 
-import isTokenValid, { decodeJwtToken } from '~/utils/jwt.util';
+import useAuthenticationStore from '~/hooks/useAuthenticationStore';
+import { isTokenValid, decodeJwtToken } from '~/utils/jwt.util';
 
 type IAuthenticationContext = {
-  accessToken?: string | null;
-  refreshToken?: string | null;
+  accessToken?: string;
+  refreshToken?: string;
 
-  setLoginSession(accessToken: string, refreshToken: string): void;
+  setLoginInfo(accessToken: string, refreshToken: string): void;
   logOut(): void;
 
   isLoggedIn: boolean;
@@ -20,43 +21,32 @@ const AuthenticationContext = createContext<IAuthenticationContext | undefined>(
 export default AuthenticationContext;
 
 export function AuthenticationContextProvider({ children }: PropsWithChildren) {
-  // read tokens from local storage when application first load or reload
-  const [persistedAccessToken, setPersistedAccessToken] = useState(() =>
-    localStorage.getItem('accessToken'),
-  );
-  const [persistedRefreshToken, setPersistedRefreshToken] = useState(() =>
-    localStorage.getItem('refreshToken'),
-  );
+  const [accessToken, refreshToken, setTokens, clearTokens] = useAuthenticationStore((store) => [
+    store.accessToken,
+    store.refreshToken,
+    store.setTokens,
+    store.clearTokens,
+  ]);
 
   const currentUser: ITokenInfo = useMemo(
-    () => decodeJwtToken(persistedAccessToken ?? '') as never,
-    [persistedAccessToken],
+    () => decodeJwtToken(accessToken ?? '') as never,
+    [accessToken],
   );
 
-  const contextValues: IAuthenticationContext = useMemo(
-    () => ({
-      currentUser,
-      accessToken: persistedAccessToken,
-      refreshToken: persistedRefreshToken,
-      isLoggedIn: Boolean(persistedAccessToken && isTokenValid(persistedAccessToken)),
-
-      setLoginSession(accessToken, refreshToken) {
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-
-        setPersistedAccessToken(accessToken);
-        setPersistedRefreshToken(refreshToken);
-      },
-
-      logOut() {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-
-        setPersistedAccessToken(null);
-        setPersistedRefreshToken(null);
-      },
-    }),
-    [currentUser, persistedAccessToken, persistedRefreshToken],
+  const contextValues = useMemo(
+    () =>
+      ({
+        currentUser,
+        accessToken,
+        refreshToken,
+        isLoggedIn: Boolean(
+          (accessToken && isTokenValid(accessToken)) ||
+            (refreshToken && isTokenValid(refreshToken)),
+        ),
+        setLoginInfo: setTokens,
+        logOut: clearTokens,
+      }) satisfies IAuthenticationContext,
+    [accessToken, clearTokens, currentUser, refreshToken, setTokens],
   );
 
   return (

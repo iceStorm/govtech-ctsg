@@ -7,7 +7,9 @@ import router from '~/router';
 import { AuthenticationContextProvider } from './contexts/AuthenticationContext';
 import AntDesignProvider from './providers/AntDesignProvider';
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } },
+});
 
 export function App() {
   return (

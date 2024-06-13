@@ -1,25 +1,42 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Typography } from 'antd';
 import Checkbox from 'antd/es/checkbox/Checkbox';
 import TextArea from 'antd/es/input/TextArea';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import type SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 import IServerError from '@/common/models/IServerError';
 
 import apiClient from '~/api';
 import AppStatic from '~/components/AppStatic';
+import AppRoutes from '~/constants/AppRoutes';
 import useAuthentication from '~/hooks/useAuthentication';
+
+import TermsOfUseModal from './TermsOfUseModal';
 
 const SignUpFormItem = Form.Item<SurveyUserEntity>;
 
 export default function SignUpPage() {
   const { currentUser } = useAuthentication();
+  const navigate = useNavigate();
+
+  const [isTermsOfUseModalOpen, setIsTermsOfUseModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (currentUser.isRegistered) {
+      navigate(AppRoutes.Home);
+
+      AppStatic.notification.info({
+        message: 'Your GOVAA account is already registered on SurveySG.',
+      });
+    }
+  }, [currentUser, currentUser.isRegistered, navigate]);
 
   const { data: governmentAgenciesResponse, isFetching: isFetchingAgencies } =
     apiClient.getGovernmentAgencies.useQuery(['government-agencies']);
 
   const { isPending: isCreatingAccount, mutate: createAccount } =
-    apiClient.createAccount.useMutation();
+    apiClient.users.createAccount.useMutation();
 
   const governmentAgencies = useMemo(
     () => (governmentAgenciesResponse?.body ?? []).map((item) => item.name),
@@ -40,9 +57,17 @@ export default function SignUpPage() {
     try {
       const formValues = await form.validateFields();
 
+      if (!formValues.checkedTermsOfUse) {
+        form.setFields([{ name: 'checkedTermsOfUse', errors: ['Please agree with terms of use'] }]);
+        return;
+      }
+
       createAccount(
         { body: formValues },
         {
+          onSuccess() {
+            navigate(AppRoutes.Profile);
+          },
           onError(error) {
             AppStatic.notification.error({ message: (error.body as IServerError).message });
           },
@@ -56,6 +81,15 @@ export default function SignUpPage() {
   return (
     <div className="flex flex-col gap-10 w-72 mx-auto">
       <h1 className="font-bold text-lg">Create SurveySG account.</h1>
+
+      <TermsOfUseModal
+        isOpen={isTermsOfUseModalOpen}
+        onClose={(isAccepted) => {
+          setIsTermsOfUseModalOpen(false);
+
+          form.setFieldValue('checkedTermsOfUse', isAccepted);
+        }}
+      />
 
       <Form form={form} layout="vertical" disabled={isFetchingAgencies ?? isCreatingAccount}>
         <SignUpFormItem name="govaaEmail" hidden />
@@ -91,7 +125,17 @@ export default function SignUpPage() {
           valuePropName="checked"
           rules={[{ required: true, message: 'Please confirm this checkbox' }]}
         >
-          <Checkbox>I agree to terms of use</Checkbox>
+          <Checkbox onClick={() => setIsTermsOfUseModalOpen(true)}>
+            I agree to{' '}
+            <Typography.Text
+              underline
+              onClick={() => {
+                //
+              }}
+            >
+              terms of use
+            </Typography.Text>
+          </Checkbox>
         </SignUpFormItem>
 
         <SignUpFormItem>

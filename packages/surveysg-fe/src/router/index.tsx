@@ -5,13 +5,13 @@ import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { AppStaticInitializer } from '~/components/AppStatic';
 import AppRoutes from '~/constants/AppRoutes';
 import MainLayout from '~/layout';
-import NotFoundPage from '~/pages/errors/NotFoundPage';
-import HomePage from '~/pages/home/HomePage';
-import LoginPage from '~/pages/login/LoginPage';
-import ProfilePage from '~/pages/profile/ProfilePage';
-import SignUpPage from '~/pages/sign-up/SignUpPage';
+import NotFoundPage from '~/pages/errors/not-found';
+import HomePage from '~/pages/home';
+import LoginPage from '~/pages/login';
+import ProfilePage from '~/pages/profile';
+import SignUpPage from '~/pages/sign-up';
 
-import { IAppRoute } from './IAppRoute';
+import { IAppRoute } from '../models/IAppRoute';
 import generateRouter from './utils';
 
 const routes: IAppRoute[] = [

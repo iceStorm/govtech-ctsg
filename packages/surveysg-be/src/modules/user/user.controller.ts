@@ -1,4 +1,5 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 import ITokenInfo from '@/common/models/ITokenInfo';
@@ -8,6 +9,7 @@ import AuthGuard from '~/guards/auth.guard';
 
 import UserService from './user.service';
 
+@ApiTags('users')
 @Controller('users')
 export default class UserController {
   constructor(private userService: UserService) {}

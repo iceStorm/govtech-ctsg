@@ -7,6 +7,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import AppModule from './app/app.module';
+import setupSwagger from './utils/swagger.util';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -15,6 +16,8 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
 
   app.useGlobalPipes(new ValidationPipe());
+
+  setupSwagger(app);
 
   const port = process.env.PORT ?? 7501;
   await app.listen(port);

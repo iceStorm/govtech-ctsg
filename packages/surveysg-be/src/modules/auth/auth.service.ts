@@ -18,12 +18,16 @@ export default class AuthService {
       throw new ForbiddenException(govaaLoginResponse.body);
     }
 
-    const surveyUser = await this.userRepo.findByEmail(credentials.email);
+    return this.generateTokens(credentials.email, govaaLoginResponse.body.name);
+  }
+
+  async generateTokens(govaaEmail: string, govaaName: string) {
+    const surveyUser = await this.userRepo.findByEmail(govaaEmail);
 
     return generateTokens({
-      email: credentials.email,
-      name: govaaLoginResponse.body.name,
       isRegistered: !!surveyUser,
+      email: govaaEmail,
+      name: govaaName,
     });
   }
 }

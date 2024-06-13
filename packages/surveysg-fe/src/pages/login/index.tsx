@@ -18,11 +18,11 @@ export default function LoginPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [originated, setOriginated] = useQueryParam('originated', StringParam);
-  const { isLoggedIn, setLoginSession } = useAuthentication();
+  const { isLoggedIn, setLoginInfo } = useAuthentication();
 
   const [form] = useForm<LoginPayload>();
 
-  const { isPending, mutate: login } = apiClient.login.useMutation();
+  const { isPending, mutate: login } = apiClient.auth.login.useMutation();
 
   const handleFormSubmit = async () => {
     try {
@@ -32,8 +32,8 @@ export default function LoginPage() {
         { body: formValue },
         {
           onSuccess(data) {
-            setLoginSession(data.body.accessToken, data.body.refreshToken);
-            navigate(originated ?? AppRoutes.Profile);
+            setLoginInfo(data.body.accessToken, data.body.refreshToken);
+            navigate(originated ?? AppRoutes.Profile, { replace: true });
           },
           onError(error) {
             console.log('error:', error);
@@ -50,10 +50,12 @@ export default function LoginPage() {
   useEffect(() => {
     if (isLoggedIn) {
       navigate(AppRoutes.Home);
-
       AppStatic.notification.warning({ message: 'You are already logged in.' });
     }
-  }, [isLoggedIn, navigate]);
+
+    // this hook only run once when accessing the login page from other pages
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (state?.originated) {

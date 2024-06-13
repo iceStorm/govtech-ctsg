@@ -3,14 +3,14 @@ import * as path from 'path';
 
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/packages/common',
 
   plugins: [
-    nxViteTsPaths(),
+    tsConfigPaths({}),
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),

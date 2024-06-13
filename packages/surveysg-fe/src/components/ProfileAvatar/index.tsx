@@ -34,7 +34,7 @@ export default function ProfileAvatar() {
   );
 
   return (
-    <Dropdown placement="bottomCenter" menu={{ items }} dropdownRender={renderItem} arrow={{}}>
+    <Dropdown placement="bottom" menu={{ items }} dropdownRender={renderItem} arrow={{}}>
       <Avatar style={{ backgroundColor: '#87d068' }}>{userNameLetters}</Avatar>
     </Dropdown>
   );

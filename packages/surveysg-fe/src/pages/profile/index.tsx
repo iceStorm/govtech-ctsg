@@ -5,7 +5,7 @@ import apiClient from '~/api';
 import AppRoutes from '~/constants/AppRoutes';
 
 export default function ProfilePage() {
-  const { data: profileResponse, error } = apiClient.getProfile.useQuery(
+  const { data: profileResponse, error } = apiClient.users.getProfile.useQuery(
     ['profile'],
     {},
     { queryKey: [], gcTime: 0 },
