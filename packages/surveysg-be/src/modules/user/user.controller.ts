@@ -1,8 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 
+import ITokenInfo from '@/common/models/ITokenInfo';
+
 import TokenInfo from '~/decorators/request-user.decorator';
 import AuthGuard from '~/guards/auth.guard';
-import ITokenInfo from '~/models/ITokenInfo';
 
 import UserService from './user.service';
 

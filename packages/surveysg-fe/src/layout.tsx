@@ -1,32 +1,37 @@
 import { Button } from 'antd';
-import Link from 'antd/es/typography/Link';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+
+import useAuthentication from './hooks/useAuthentication';
 
 export default function MainLayout() {
   const { pathname } = useLocation();
+
+  const { isLoggedIn, logOut } = useAuthentication();
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="border-b py-2">
         <nav className="container flex items-center justify-between">
-          <a href="/" className="inline-flex py-3 font-bold">
+          <Link to="/" className="inline-flex py-3 font-bold">
             SurveySG
-          </a>
+          </Link>
 
           <ul />
 
           <div className="flex items-center gap-5">
-            {pathname !== '/login' && (
-              <Link href="/login" target="">
+            {!isLoggedIn && pathname !== '/login' && (
+              <Link to="/login" target="">
                 Login
               </Link>
             )}
 
-            {pathname !== '/sign-up' && (
-              <Link href="/sign-up">
+            {!isLoggedIn && pathname !== '/sign-up' && (
+              <Link to="/sign-up">
                 <Button>Create account</Button>
               </Link>
             )}
+
+            {isLoggedIn && <Button onClick={logOut}>Logout</Button>}
           </div>
         </nav>
       </header>

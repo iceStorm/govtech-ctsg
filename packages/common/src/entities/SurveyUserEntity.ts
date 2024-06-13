@@ -18,4 +18,6 @@ export default class SurveyUserEntity {
   @Column()
   @IsString()
   jobScopeDescription!: string;
+
+  checkedTermsOfUse!: boolean;
 }
