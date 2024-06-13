@@ -5,6 +5,7 @@ import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { AppStaticInitializer } from '~/components/AppStatic';
 import AppRoutes from '~/constants/AppRoutes';
 import MainLayout from '~/layout';
+import NotFoundPage from '~/pages/errors/NotFoundPage';
 import HomePage from '~/pages/home/HomePage';
 import LoginPage from '~/pages/login/LoginPage';
 import ProfilePage from '~/pages/profile/ProfilePage';
@@ -41,6 +42,11 @@ const routes: IAppRoute[] = [
       },
 
       { path: AppRoutes.Profile, element: <ProfilePage />, requireAuth: true, title: 'Profile' },
+
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
     ],
   },
 ];

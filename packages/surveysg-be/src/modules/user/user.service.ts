@@ -1,6 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
+import ITokenInfo from '@/common/models/ITokenInfo';
 
 import UserRepository from './user.repository';
 
@@ -18,7 +25,28 @@ export default class UserService {
     return user;
   }
 
-  createAccount(payload: SurveyUserEntity) {
-    throw new Error('Method not implemented.');
+  async createAccount(tokenInfo: ITokenInfo, payload: SurveyUserEntity) {
+    // ensure payload's email is equals to the authenticated user's email
+    if (tokenInfo.email !== payload.govaaEmail) {
+      throw new BadRequestException(
+        'Registration email does not match with the authenticated GOVAA user.',
+      );
+    }
+
+    // ensure payload's name is equals to the authenticated user's name
+    if (tokenInfo.name !== payload.name) {
+      throw new ForbiddenException(
+        'Registration name does not match with the authenticated GOVAA user.',
+      );
+    }
+
+    const surveyUser = await this.userRepository.findByEmail(payload.govaaEmail);
+
+    if (surveyUser) {
+      throw new ConflictException(`You have already created SurveySG account.`);
+    }
+
+    const newUser = this.userRepository.create(payload);
+    return this.userRepository.save(newUser);
   }
 }

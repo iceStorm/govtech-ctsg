@@ -1,26 +1,49 @@
-import { useEffect } from 'react';
-
-import IServerError from '@/common/models/IServerError';
+import { Button, Descriptions, Result } from 'antd';
+import { Link } from 'react-router-dom';
 
 import apiClient from '~/api';
-import AppStatic from '~/components/AppStatic';
+import AppRoutes from '~/constants/AppRoutes';
 
 export default function ProfilePage() {
-  const { data: profileResponse, isFetching, error } = apiClient.getProfile.useQuery(['profile']);
+  const { data: profileResponse, error } = apiClient.getProfile.useQuery(
+    ['profile'],
+    {},
+    { queryKey: [], gcTime: 0 },
+  );
 
-  useEffect(() => {
-    if (error) {
-      AppStatic.notification.error({ message: (error.body as IServerError).message });
-    }
-  }, [error]);
-
-  if (!profileResponse && !isFetching) {
-    return <div>Failed to fetch profile...</div>;
+  if (error?.status === 404) {
+    return (
+      <Result
+        status="warning"
+        title={error.body.message}
+        extra={
+          <Link to={AppRoutes.CreateAccount}>
+            <Button type="primary" key="console">
+              Create now
+            </Button>
+          </Link>
+        }
+      />
+    );
   }
+
+  const { name, contactEmail, agencyName, jobScopeDescription } = profileResponse?.body ?? {};
 
   return (
     <div className="flex flex-col">
-      <h1>{profileResponse?.body.name}</h1>
+      <Descriptions
+        bordered
+        column={{ xs: 1 }}
+        items={[
+          { label: <span className="font-bold">Name</span>, children: name },
+          { label: <span className="font-bold">Contact email</span>, children: contactEmail },
+          { label: <span className="font-bold">Agency</span>, children: agencyName },
+          {
+            label: <span className="font-bold">Job scope description</span>,
+            children: jobScopeDescription,
+          },
+        ]}
+      />
     </div>
   );
 }

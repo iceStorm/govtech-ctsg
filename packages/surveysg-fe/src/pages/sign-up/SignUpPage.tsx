@@ -29,7 +29,11 @@ export default function SignUpPage() {
   const [form] = Form.useForm<SurveyUserEntity>();
 
   useEffect(() => {
-    form.setFieldsValue({ name: currentUser.name, email: currentUser.email });
+    form.setFieldsValue({
+      name: currentUser.name,
+      contactEmail: currentUser.email,
+      govaaEmail: currentUser.email,
+    });
   }, [currentUser.email, currentUser.name, form]);
 
   const handleFormSubmit = async () => {
@@ -54,11 +58,13 @@ export default function SignUpPage() {
       <h1 className="font-bold text-lg">Create SurveySG account.</h1>
 
       <Form form={form} layout="vertical" disabled={isFetchingAgencies ?? isCreatingAccount}>
+        <SignUpFormItem name="govaaEmail" hidden />
+
         <SignUpFormItem name="name" label="Name" rules={[{ required: true }]}>
           <Input disabled />
         </SignUpFormItem>
 
-        <SignUpFormItem name="email" label="Contact email" rules={[{ required: true }]}>
+        <SignUpFormItem name="contactEmail" label="Contact email" rules={[{ required: true }]}>
           <Input allowClear />
         </SignUpFormItem>
 

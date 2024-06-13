@@ -1,15 +1,18 @@
-import { IsString } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('user')
 export default class SurveyUserEntity {
   @PrimaryColumn()
-  @IsString()
-  email!: string;
+  govaaEmail!: string; // govaa email
+
+  @Column()
+  @IsEmail()
+  contactEmail!: string;
 
   @Column()
   @IsString()
-  name!: string;
+  name!: string; // govaa name
 
   @Column()
   @IsString()

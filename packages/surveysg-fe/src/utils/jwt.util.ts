@@ -1,3 +1,4 @@
+import { differenceInSeconds } from 'date-fns';
 import { decodeJwt } from 'jose';
 
 import { TokenPayload } from '@/common/models/ITokenInfo';
@@ -9,9 +10,9 @@ export default function isTokenValid(token: string): boolean {
     return false;
   }
 
-  const differenceFromNow = exp - Date.now() / 1000;
+  const differenceFromNow = differenceInSeconds(exp * 1000, Date.now());
 
-  console.log('differenceFromNow', differenceFromNow);
+  console.log('access token expires in:', differenceFromNow, 'seconds');
 
   return differenceFromNow > 0;
 }

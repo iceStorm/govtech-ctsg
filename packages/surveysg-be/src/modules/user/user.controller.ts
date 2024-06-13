@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
 
 import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 import ITokenInfo from '@/common/models/ITokenInfo';
@@ -20,7 +20,8 @@ export default class UserController {
 
   @UseGuards(AuthGuard)
   @Post('create')
-  createAccount(@Body() payload: SurveyUserEntity) {
-    return this.userService.createAccount(payload);
+  @HttpCode(HttpStatus.CREATED)
+  createAccount(@TokenInfo() token: ITokenInfo, @Body() payload: SurveyUserEntity) {
+    return this.userService.createAccount(token, payload);
   }
 }

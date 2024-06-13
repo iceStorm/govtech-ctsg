@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useQueryParam, StringParam } from 'use-query-params';
 
+import ProfileAvatar from './components/ProfileAvatar';
 import AppRoutes from './constants/AppRoutes';
 import useAuthentication from './hooks/useAuthentication';
 
@@ -9,20 +10,18 @@ export default function MainLayout() {
   const { pathname } = useLocation();
   const [originated] = useQueryParam('originated', StringParam);
 
-  const { isLoggedIn, currentUser, logOut } = useAuthentication();
+  const { isLoggedIn, currentUser } = useAuthentication();
 
   const shouldShowCreateAccount =
     pathname !== AppRoutes.CreateAccount &&
     originated !== AppRoutes.CreateAccount &&
     (!isLoggedIn || !currentUser.isRegistered);
 
-  console.log('should show:', shouldShowCreateAccount);
-
   return (
     <div className="flex flex-col min-h-screen">
       <header className="border-b py-2">
         <nav className="container flex items-center justify-between">
-          <Link to="/" className="inline-flex py-3 font-bold">
+          <Link to="/" className="inline-flex py-3 font-bold text-base">
             SurveySG
           </Link>
 
@@ -41,7 +40,7 @@ export default function MainLayout() {
               </Link>
             )}
 
-            {isLoggedIn && <Button onClick={logOut}>Logout</Button>}
+            {isLoggedIn && <ProfileAvatar />}
           </div>
         </nav>
       </header>

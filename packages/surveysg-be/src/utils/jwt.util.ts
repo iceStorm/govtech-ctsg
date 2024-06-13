@@ -1,6 +1,6 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { addSeconds } from 'date-fns';
-import { SignJWT, decodeJwt, jwtVerify } from 'jose';
+import { SignJWT, jwtVerify } from 'jose';
 
 import { TokenPayload } from '@/common/models/ITokenInfo';
 
@@ -30,17 +30,3 @@ export async function generateTokens(payload: TokenPayload) {
 
   return { accessToken, refreshToken };
 }
-
-export const isTokenValid = (token: string): boolean => {
-  const { exp } = decodeJwt(token);
-
-  if (!exp) {
-    return false;
-  }
-
-  const differenceFromNow = exp - Date.now() / 1000;
-
-  console.log('differenceFromNow', differenceFromNow);
-
-  return differenceFromNow > 0;
-};

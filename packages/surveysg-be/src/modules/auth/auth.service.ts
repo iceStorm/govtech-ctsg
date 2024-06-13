@@ -1,7 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import LoginPayload from '@/common/dtos/login-payload.dto';
-import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 
 import govaaApiClient from '~/api';
 import { generateTokens } from '~/utils/jwt.util';
@@ -26,17 +25,5 @@ export default class AuthService {
       name: govaaLoginResponse.body.name,
       isRegistered: !!surveyUser,
     });
-  }
-
-  async signUp(payload: SurveyUserEntity) {
-    const surveyUser = await this.userRepo.findByEmail(payload.email);
-
-    if (surveyUser) {
-      throw new ForbiddenException(
-        `User with email ${surveyUser.email} already exists in SurveySG.`,
-      );
-    }
-
-    return this.userRepo.create(payload);
   }
 }

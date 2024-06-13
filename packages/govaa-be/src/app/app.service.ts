@@ -6,7 +6,12 @@ const mockUsers: GovaaUser[] = [
   {
     name: 'Anh Tuan',
     email: 'tuanna@ncs-sdc.com',
-    password: '12345',
+    password: 'Z(gL{~K]N6=CH]GT',
+  },
+  {
+    name: 'Anh Tuan 2',
+    email: 'tuanna@ncs.com',
+    password: 'Z(gL{~K]N6=CH]GTk',
   },
 ];
 

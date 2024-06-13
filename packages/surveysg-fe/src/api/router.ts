@@ -30,6 +30,7 @@ const apiRouter = c.router(
       method: 'GET',
       responses: {
         200: c.type<SurveyUserEntity>(),
+        404: c.type<IServerError>(),
       },
     },
 
@@ -44,6 +45,7 @@ const apiRouter = c.router(
   {
     commonResponses: {
       401: c.type<IServerError>(),
+      404: c.type<IServerError>(),
       403: c.type<IServerError>(),
       409: c.type<IServerError>(),
     },
