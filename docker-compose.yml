@@ -38,10 +38,9 @@ services:
     extends:
       file: docker-compose-base.yml
       service: nx-app-base
-    command: yarn nx run govaa-be:serve
+    command: yarn nx run govaa-be:serve:production
     ports:
       - "7500:7500"
-      - "9229:9229"
     networks:
       - govtech_ctsg
     depends_on:
@@ -52,10 +51,9 @@ services:
     extends:
       file: docker-compose-base.yml
       service: nx-app-base
-    command: yarn nx run surveysg-be:serve
+    command: yarn nx run surveysg-be:serve:production
     ports:
       - "7501:7501"
-      - "9229:9229"
     networks:
       - govtech_ctsg
     depends_on:
@@ -66,7 +64,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: nx-app-base
-    command: yarn nx run surveysg-fe:serve
+    command: yarn nx run surveysg-fe:serve-static --host=0.0.0.0 --port=7502
     ports:
       - "7502:7502"
     networks:
