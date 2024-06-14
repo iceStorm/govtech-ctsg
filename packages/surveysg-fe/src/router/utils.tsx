@@ -1,4 +1,4 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { RouteObject, createHashRouter } from 'react-router-dom';
 
 import RouteWrapperComponent from '~/components/RouteWrapper';
 import { IAppRoute } from '~/models/IAppRoute';
@@ -25,6 +25,6 @@ const mapRouteConfigs = (customRouteObjects: IAppRoute[]): RouteObject[] => {
 };
 
 const generateRouter = (predefinedRouteConfigs: IAppRoute[]) =>
-  createBrowserRouter(mapRouteConfigs(predefinedRouteConfigs));
+  createHashRouter(mapRouteConfigs(predefinedRouteConfigs));
 
 export default generateRouter;
