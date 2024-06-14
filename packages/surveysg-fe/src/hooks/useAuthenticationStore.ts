@@ -5,8 +5,10 @@ import { createWithEqualityFn } from 'zustand/traditional';
 import IAuthenticationInfo from '@/common/models/IAuthenticationInfo';
 
 type IAuthenticationStore = Partial<IAuthenticationInfo> & {
-  setTokens(accessToken: string, refreshToken: string): void;
+  isRegistered?: boolean;
 
+  setRegistrationStatus(isRegistered: boolean): void;
+  setTokens(accessToken: string, refreshToken: string): void;
   clearTokens(): void;
 };
 
@@ -19,7 +21,11 @@ const useAuthenticationStore = createWithEqualityFn<IAuthenticationStore>()(
       },
 
       clearTokens() {
-        set({ accessToken: undefined, refreshToken: undefined });
+        set({ accessToken: undefined, refreshToken: undefined, isRegistered: undefined });
+      },
+
+      setRegistrationStatus(isRegistered) {
+        set(() => ({ isRegistered }));
       },
     }),
 

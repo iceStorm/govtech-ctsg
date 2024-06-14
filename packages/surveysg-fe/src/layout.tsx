@@ -10,12 +10,12 @@ export default function MainLayout() {
   const { pathname } = useLocation();
   const [originated] = useQueryParam('originated', StringParam);
 
-  const { isLoggedIn, currentUser } = useAuthentication();
+  const { isLoggedIn, isRegistered } = useAuthentication();
 
   const shouldShowCreateAccount =
     pathname !== AppRoutes.CreateAccount &&
     originated !== AppRoutes.CreateAccount &&
-    (!isLoggedIn || !currentUser.isRegistered);
+    (!isLoggedIn || !isRegistered);
 
   return (
     <div className="flex flex-col min-h-screen">

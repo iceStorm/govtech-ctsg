@@ -31,7 +31,7 @@ export function decodeJwtToken(token: string) {
   } catch (error) {
     // console.log('decodeJwtToken exception:', error);
 
-    return undefined;
+    return {};
   }
 }
 

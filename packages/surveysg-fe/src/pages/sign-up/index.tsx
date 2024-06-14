@@ -17,20 +17,23 @@ import TermsOfUseModal from './TermsOfUseModal';
 const SignUpFormItem = Form.Item<SurveyUserEntity>;
 
 export default function SignUpPage() {
-  const { currentUser } = useAuthentication();
+  const { currentUser, setRegistrationStatus, isRegistered } = useAuthentication();
   const navigate = useNavigate();
 
   const [isTermsOfUseModalOpen, setIsTermsOfUseModalOpen] = useState(false);
 
   useEffect(() => {
-    if (currentUser.isRegistered) {
+    if (isRegistered) {
       navigate(AppRoutes.Home);
 
       AppStatic.notification.info({
         message: 'Your GOVAA account is already registered on SurveySG.',
       });
     }
-  }, [currentUser, currentUser.isRegistered, navigate]);
+
+    // only check this condition when page first loads
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { data: governmentAgenciesResponse, isFetching: isFetchingAgencies } =
     apiClient.getGovernmentAgencies.useQuery(['government-agencies']);
@@ -62,6 +65,8 @@ export default function SignUpPage() {
         { body: formValues },
         {
           onSuccess() {
+            setRegistrationStatus(true);
+
             navigate(AppRoutes.Profile);
           },
           onError(error) {

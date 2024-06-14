@@ -1,6 +1,6 @@
 # Govtech Ctsg
 
-## Steps to get the project runs on your machine:
+## Steps to run the project on your machine:
 1. Clone the project:  
    `git clone https://github.com/icestorm/govtech-ctsg`
 
@@ -15,9 +15,9 @@
 
 5. Start testing through the flows.
 
-### Test data:
-There are 2 mock GOVAA account to use:
-```JSON
+## Test data:
+There are 2 mock GOVAA accounts to use:
+```TypeScript
    {
       name: 'Anh Tuan',
       email: 'tuanna@ncs-sdc.com',

@@ -1,15 +1,25 @@
 import { Button, Descriptions, Result } from 'antd';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import apiClient from '~/api';
 import AppRoutes from '~/constants/AppRoutes';
+import useAuthentication from '~/hooks/useAuthentication';
 
 export default function ProfilePage() {
-  const { data: profileResponse, error } = apiClient.users.getProfile.useQuery(
-    ['profile'],
-    {},
-    { queryKey: [], gcTime: 0 },
-  );
+  const { setRegistrationStatus } = useAuthentication();
+
+  const {
+    data: profileResponse,
+    error,
+    isFetching,
+  } = apiClient.users.getProfile.useQuery(['profile'], {}, { queryKey: [], gcTime: 0 });
+
+  useEffect(() => {
+    if (!isFetching) {
+      setRegistrationStatus(!!profileResponse?.body);
+    }
+  }, [isFetching, profileResponse?.body, setRegistrationStatus]);
 
   if (error?.status === 404) {
     return (
