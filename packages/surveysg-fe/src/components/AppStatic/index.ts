@@ -1,4 +1,4 @@
-import { App, notification as antdNotification } from 'antd';
+import { App } from 'antd';
 import { MessageInstance } from 'antd/es/message/interface';
 import { ModalStaticFunctions } from 'antd/es/modal/confirm';
 import { NotificationInstance } from 'antd/es/notification/interface';
@@ -22,13 +22,6 @@ export default AppStatic;
 export function AppStaticInitializer() {
   const { message, modal, notification } = App.useApp();
   Object.assign(AppStatic, { message, modal, notification });
-
-  // antdNotification.useNotification({
-  //   placement: 'bottomLeft',
-  //   bottom: 50,
-  //   duration: 3,
-  //   rtl: true,
-  // });
 
   return null;
 }

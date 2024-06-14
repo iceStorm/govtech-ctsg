@@ -59,6 +59,7 @@ export default function SignUpPage() {
 
       if (!formValues.checkedTermsOfUse) {
         form.setFields([{ name: 'checkedTermsOfUse', errors: ['Please agree with terms of use'] }]);
+        form.validateFields();
         return;
       }
 
@@ -88,20 +89,18 @@ export default function SignUpPage() {
           setIsTermsOfUseModalOpen(false);
 
           form.setFieldValue('checkedTermsOfUse', isAccepted);
+          form.validateFields();
         }}
       />
 
       <Form form={form} layout="vertical" disabled={isFetchingAgencies ?? isCreatingAccount}>
         <SignUpFormItem name="govaaEmail" hidden />
-
         <SignUpFormItem name="name" label="Name" rules={[{ required: true }]}>
           <Input disabled />
         </SignUpFormItem>
-
         <SignUpFormItem name="contactEmail" label="Contact email" rules={[{ required: true }]}>
           <Input allowClear />
         </SignUpFormItem>
-
         <SignUpFormItem name="agencyName" label="Agency" rules={[{ required: true }]}>
           <Select
             showSearch
@@ -111,30 +110,21 @@ export default function SignUpPage() {
             options={governmentAgencies.map((item) => ({ label: item, value: item }))}
           />
         </SignUpFormItem>
-
         <SignUpFormItem
           name="jobScopeDescription"
           label="Job scope description"
           rules={[{ required: true }]}
         >
-          <TextArea allowClear />
+          <TextArea allowClear maxLength={275} showCount />
         </SignUpFormItem>
 
         <SignUpFormItem
           name="checkedTermsOfUse"
           valuePropName="checked"
-          rules={[{ required: true, message: 'Please confirm this checkbox' }]}
+          rules={[{ required: true, message: 'Please agree with terms of use' }]}
         >
           <Checkbox onClick={() => setIsTermsOfUseModalOpen(true)}>
-            I agree to{' '}
-            <Typography.Text
-              underline
-              onClick={() => {
-                //
-              }}
-            >
-              terms of use
-            </Typography.Text>
+            I agree to <Typography.Text underline>terms of use</Typography.Text>
           </Checkbox>
         </SignUpFormItem>
 

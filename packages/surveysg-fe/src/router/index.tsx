@@ -12,6 +12,7 @@ import ProfilePage from '~/pages/profile';
 import SignUpPage from '~/pages/sign-up';
 
 import { IAppRoute } from '../models/IAppRoute';
+
 import generateRouter from './utils';
 
 const routes: IAppRoute[] = [

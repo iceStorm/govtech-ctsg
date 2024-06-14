@@ -1,7 +1,10 @@
-import { IsEmail, IsString } from 'class-validator';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { IsEmail, IsString, MaxLength } from 'class-validator';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
+import ForeignKeys from '../constants/ForeignKeys';
 import IsTrue from '../validators/IsTrue';
+
+import GovernmentAgencyEntity from './GovernmentAgencyEntity';
 
 @Entity('user')
 export default class SurveyUserEntity {
@@ -17,11 +20,17 @@ export default class SurveyUserEntity {
   @IsString()
   name!: string; // govaa name
 
-  @Column()
+  @ManyToOne(() => GovernmentAgencyEntity)
+  @JoinColumn({
+    name: 'agencyName',
+    referencedColumnName: 'name',
+    foreignKeyConstraintName: ForeignKeys.USER__AGENCY_NAME,
+  })
   @IsString()
   agencyName!: string;
 
   @Column()
+  @MaxLength(275)
   @IsString()
   jobScopeDescription!: string;
 

@@ -1,8 +1,9 @@
 import { Modal } from 'antd';
+import './styles.scss';
 
 type TermsOfUseModalProps = {
   isOpen: boolean;
-  onClose: (accepted: boolean) => void;
+  onClose: (accepted?: true) => void;
 };
 
 type TermItem = {
@@ -58,15 +59,15 @@ export default function TermsOfUseModal(props: TermsOfUseModalProps) {
 
   return (
     <Modal
-      width={1000}
       title={<span className="text-lg font-bold">Terms of Use</span>}
       okText="Agree"
       cancelText="Disagree"
       open={isOpen}
       maskClosable={false}
       closable={false}
-      onCancel={() => onClose(false)}
+      onCancel={() => onClose(undefined)}
       onOk={() => onClose(true)}
+      className="term-of-use-modal"
     >
       <p className="mb-3">
         By accessing and using this survey website, you agree to comply with and be bound by the

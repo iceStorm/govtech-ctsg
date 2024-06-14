@@ -1,11 +1,11 @@
 import {
   BadRequestException,
   ConflictException,
-  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 
+import ForeignKeys from '@/common/constants/ForeignKeys';
 import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 import ITokenInfo from '@/common/models/ITokenInfo';
 
@@ -35,18 +35,28 @@ export default class UserService {
 
     // ensure payload's name is equals to the authenticated user's name
     if (tokenInfo.name !== payload.name) {
-      throw new ForbiddenException(
+      throw new BadRequestException(
         'Registration name does not match with the authenticated GOVAA user.',
       );
     }
 
     const surveyUser = await this.userRepository.findByEmail(payload.govaaEmail);
-
     if (surveyUser) {
       throw new ConflictException(`You have already created SurveySG account.`);
     }
 
-    const newUser = this.userRepository.create(payload);
-    return this.userRepository.save(newUser);
+    try {
+      const newUser = this.userRepository.create(payload);
+      await this.userRepository.save(newUser);
+    } catch (error) {
+      // check agency integrity constraint
+      if (error.message.includes(ForeignKeys.USER__AGENCY_NAME)) {
+        throw new BadRequestException(
+          `Invalid agency name. Please refer to the list of government agencies.`,
+        );
+      }
+
+      throw error;
+    }
   }
 }

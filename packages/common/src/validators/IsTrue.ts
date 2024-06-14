@@ -1,12 +1,12 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
 
-export default function IsUserAlreadyExist(validationOptions?: ValidationOptions) {
-  return function (object: object, propertyName: string) {
+export default function IsTrue(validationOptions?: ValidationOptions) {
+  return function (target: object, propertyName: string) {
     registerDecorator({
-      target: object.constructor,
+      name: 'IsTrue',
       propertyName,
-      options: validationOptions,
-      constraints: [],
+      target: target.constructor,
+      options: { message: '$property must be true', ...validationOptions },
       validator: {
         validate(value: unknown) {
           return typeof value === 'boolean' && value === true;

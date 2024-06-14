@@ -1,0 +1,11 @@
+.term-of-use-modal {
+  top: 40px;
+  max-width: 760px;
+  width: 90% !important;
+
+  .ant-modal-body {
+    padding-right: 4px;
+    max-height: calc(100dvh - 220px);
+    overflow: scroll;
+  }
+}

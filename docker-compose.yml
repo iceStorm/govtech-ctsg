@@ -54,6 +54,7 @@ services:
     command: yarn nx run surveysg-be:serve:production
     ports:
       - "7501:7501"
+      - "9229:9229"
     networks:
       - govtech_ctsg
     depends_on:

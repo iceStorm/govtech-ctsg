@@ -7,6 +7,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import AppModule from './app/app.module';
+import AppExceptionFilter from './filters/app-exception.filter';
 import setupSwagger from './utils/swagger.util';
 
 async function bootstrap() {
@@ -15,6 +16,7 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
+  app.useGlobalFilters(new AppExceptionFilter());
   app.useGlobalPipes(new ValidationPipe());
 
   setupSwagger(app);
