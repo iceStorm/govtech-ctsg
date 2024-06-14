@@ -50,7 +50,7 @@ export default class UserService {
       await this.userRepository.save(newUser);
     } catch (error) {
       // check agency integrity constraint
-      if (error.message.includes(ForeignKeys.USER__AGENCY_NAME)) {
+      if (error.message.includes(ForeignKeys.USER__AGENCY)) {
         throw new BadRequestException(
           `Invalid agency name. Please refer to the list of government agencies.`,
         );

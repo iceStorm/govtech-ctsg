@@ -1,5 +1,5 @@
 enum ForeignKeys {
-  USER__AGENCY_NAME = 'FK__SURVEY_USER__GOVERNMENT_AGENCY_NAME',
+  USER__AGENCY = 'FK___SURVEY_USER___GOVERNMENT_AGENCY',
 }
 
 export default ForeignKeys;

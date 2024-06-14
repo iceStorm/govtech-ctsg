@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import BaseRepository from '@/be-common/base/base.repository';
 import GovernmentAgencyEntity from '@/common/entities/GovernmentAgencyEntity';
-
-import BaseRepository from '~/common/base.repository';
 
 @Injectable()
 export default class GovernmentAgencyRepository extends BaseRepository(GovernmentAgencyEntity) {}

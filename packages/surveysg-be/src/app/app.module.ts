@@ -8,6 +8,7 @@ import SurveyUserEntity from '@/common/entities/SurveyUserEntity';
 import RequestLoggerMiddleware from '~/middlewares/request-logger.middleware';
 import AuthModule from '~/modules/auth';
 import GovernmentAgencyModule from '~/modules/government-agency';
+import SeedModule from '~/modules/seed/seed.module';
 import UserModule from '~/modules/user';
 
 import AppController from './app.controller';
@@ -20,6 +21,7 @@ import AppService from './app.service';
     GovernmentAgencyModule,
     AuthModule,
     UserModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

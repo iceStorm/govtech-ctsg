@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select, Typography } from 'antd';
 import Checkbox from 'antd/es/checkbox/Checkbox';
 import TextArea from 'antd/es/input/TextArea';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import type SurveyUserEntity from '@/common/entities/SurveyUserEntity';
@@ -37,11 +37,6 @@ export default function SignUpPage() {
 
   const { isPending: isCreatingAccount, mutate: createAccount } =
     apiClient.users.createAccount.useMutation();
-
-  const governmentAgencies = useMemo(
-    () => (governmentAgenciesResponse?.body ?? []).map((item) => item.name),
-    [governmentAgenciesResponse?.body],
-  );
 
   const [form] = Form.useForm<SurveyUserEntity>();
 
@@ -95,21 +90,28 @@ export default function SignUpPage() {
 
       <Form form={form} layout="vertical" disabled={isFetchingAgencies ?? isCreatingAccount}>
         <SignUpFormItem name="govaaEmail" hidden />
+
         <SignUpFormItem name="name" label="Name" rules={[{ required: true }]}>
           <Input disabled />
         </SignUpFormItem>
+
         <SignUpFormItem name="contactEmail" label="Contact email" rules={[{ required: true }]}>
           <Input allowClear />
         </SignUpFormItem>
-        <SignUpFormItem name="agencyName" label="Agency" rules={[{ required: true }]}>
+
+        <SignUpFormItem name="agency" label="Agency" rules={[{ required: true }]}>
           <Select
             showSearch
             allowClear
             loading={isFetchingAgencies}
             placeholder="Select an agency"
-            options={governmentAgencies.map((item) => ({ label: item, value: item }))}
+            options={governmentAgenciesResponse?.body.map((item) => ({
+              value: item.id,
+              label: item.name,
+            }))}
           />
         </SignUpFormItem>
+
         <SignUpFormItem
           name="jobScopeDescription"
           label="Job scope description"

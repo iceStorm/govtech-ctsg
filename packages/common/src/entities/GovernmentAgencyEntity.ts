@@ -1,7 +1,10 @@
-import { Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('government_agency')
 export default class GovernmentAgencyEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column()
   name!: string;
 }

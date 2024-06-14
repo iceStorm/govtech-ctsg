@@ -14,3 +14,18 @@
    `http://localhost:7502`
 
 5. Start testing through the flows.
+
+### Test data:
+There are 2 mock GOVAA account to use:
+```JSON
+   {
+      name: 'Anh Tuan',
+      email: 'tuanna@ncs-sdc.com',
+      password: '12345',
+   },
+   {
+      name: 'Anh Tuan 2',
+      email: 'tuanna@ncs.com',
+      password: '12345',
+   },
+```

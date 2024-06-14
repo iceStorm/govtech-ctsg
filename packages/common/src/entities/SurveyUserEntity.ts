@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsNumber, IsString, MaxLength } from 'class-validator';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import ForeignKeys from '../constants/ForeignKeys';
@@ -20,14 +20,14 @@ export default class SurveyUserEntity {
   @IsString()
   name!: string; // govaa name
 
-  @ManyToOne(() => GovernmentAgencyEntity)
+  @ManyToOne(() => GovernmentAgencyEntity, { eager: true })
   @JoinColumn({
-    name: 'agencyName',
-    referencedColumnName: 'name',
-    foreignKeyConstraintName: ForeignKeys.USER__AGENCY_NAME,
+    name: 'agencyId',
+    referencedColumnName: 'id',
+    foreignKeyConstraintName: ForeignKeys.USER__AGENCY,
   })
-  @IsString()
-  agencyName!: string;
+  @IsNumber()
+  agency!: GovernmentAgencyEntity;
 
   @Column()
   @MaxLength(275)

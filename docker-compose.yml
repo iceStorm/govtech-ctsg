@@ -65,7 +65,8 @@ services:
     extends:
       file: docker-compose-base.yml
       service: nx-app-base
-    command: yarn nx run surveysg-fe:serve-static --host=0.0.0.0 --port=7502
+    # command: yarn nx run surveysg-fe:serve-static --host=0.0.0.0 --port=7502
+    command: yarn nx run surveysg-fe:serve
     ports:
       - "7502:7502"
     networks:

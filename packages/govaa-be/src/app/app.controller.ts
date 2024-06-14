@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 
-import { GovaaLoginPayload, GovaaLoginResponse } from '~/dtos/govaa.dto';
+import { GovaaLoginEntity, GovaaLoginResponse } from '~/dtos/govaa.dto';
 
 import AppService from './app.service';
 
@@ -15,7 +15,7 @@ export default class AppController {
 
   @Post('auth')
   @HttpCode(HttpStatus.OK)
-  authenticate(@Body() credentials: GovaaLoginPayload): Promise<GovaaLoginResponse> {
+  authenticate(@Body() credentials: GovaaLoginEntity): Promise<GovaaLoginResponse> {
     return this.appService.authenticate(credentials);
   }
 }

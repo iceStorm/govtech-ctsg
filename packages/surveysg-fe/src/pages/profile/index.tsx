@@ -27,7 +27,7 @@ export default function ProfilePage() {
     );
   }
 
-  const { name, contactEmail, agencyName, jobScopeDescription } = profileResponse?.body ?? {};
+  const { name, contactEmail, agency, jobScopeDescription } = profileResponse?.body ?? {};
 
   return (
     <div className="flex flex-col">
@@ -37,7 +37,7 @@ export default function ProfilePage() {
         items={[
           { label: <span className="font-bold">Name</span>, children: name },
           { label: <span className="font-bold">Contact email</span>, children: contactEmail },
-          { label: <span className="font-bold">Agency</span>, children: agencyName },
+          { label: <span className="font-bold">Agency</span>, children: agency?.name },
           {
             label: <span className="font-bold">Job scope description</span>,
             children: jobScopeDescription,

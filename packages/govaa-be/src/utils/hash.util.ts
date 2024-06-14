@@ -1,15 +1,9 @@
-import { pbkdf2 } from 'crypto';
+import bcrypt from 'bcrypt';
 
-const hashPassword = (rawPassword: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    pbkdf2(rawPassword, 'lmSCvVDzBIhKNwXm', 1000, 128, 'sha512', (err, derivedKey) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(derivedKey.toString('hex'));
-      }
-    });
-  });
+export const hashPassword = async (rawPassword: string) => {
+  return bcrypt.hash(rawPassword, 10);
 };
 
-export default hashPassword;
+export const verifyPassword = async (rawPassword: string, hashedPassword: string) => {
+  return bcrypt.compare(rawPassword, hashedPassword);
+};
